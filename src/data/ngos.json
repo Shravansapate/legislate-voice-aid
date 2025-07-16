@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "name": "प्रगति न्यायिक सहायता केंद्र",
+    "englishName": "Pragati Legal Aid Center",
+    "location": "Delhi",
+    "phone": "+91-9876543210",
+    "whatsapp": "+91-9876543210",
+    "speciality": "Women Rights, Land Disputes",
+    "languages": ["Hindi", "English", "Punjabi"],
+    "website": "https://pragati-legal.org"
+  },
+  {
+    "id": 2,
+    "name": "आशा महिला न्यायालय",
+    "englishName": "Asha Women's Court",
+    "location": "Mumbai",
+    "phone": "+91-9876543211",
+    "whatsapp": "+91-9876543211",
+    "speciality": "Domestic Violence, Child Rights",
+    "languages": ["Hindi", "Marathi", "English"],
+    "website": "https://asha-womencourt.org"
+  },
+  {
+    "id": 3,
+    "name": "న్యాయ సేవ కేంద్రం",
+    "englishName": "Nyaya Seva Kendra",
+    "location": "Hyderabad",
+    "phone": "+91-9876543212",
+    "whatsapp": "+91-9876543212",
+    "speciality": "Employment, Government Schemes",
+    "languages": ["Telugu", "Hindi", "English"],
+    "website": "https://nyaya-seva.org"
+  },
+  {
+    "id": 4,
+    "name": "कानूनी सहायता मंच",
+    "englishName": "Legal Aid Platform",
+    "location": "Pune",
+    "phone": "+91-9876543213",
+    "whatsapp": "+91-9876543213",
+    "speciality": "Property, Documentation",
+    "languages": ["Marathi", "Hindi", "English"],
+    "website": "https://legal-aid-platform.org"
+  },
+  {
+    "id": 5,
+    "name": "ग्रामीण न्यायिक सेवा",
+    "englishName": "Rural Justice Service",
+    "location": "Lucknow",
+    "phone": "+91-9876543214",
+    "whatsapp": "+91-9876543214",
+    "speciality": "Agriculture, Labor Rights",
+    "languages": ["Hindi", "Urdu", "English"],
+    "website": "https://rural-justice.org"
+  }
+]

@@ -52,6 +52,18 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				justice: {
+					gold: 'hsl(var(--justice-gold))',
+					'gold-light': 'hsl(var(--justice-gold-light))',
+					indigo: 'hsl(var(--justice-indigo))',
+					'indigo-light': 'hsl(var(--justice-indigo-light))'
+				},
+				voice: {
+					active: 'hsl(var(--voice-active))'
+				},
+				document: {
+					bg: 'hsl(var(--document-bg))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
