@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,6 +9,11 @@ import ngosData from '@/data/ngos.json';
 
 const NGODirectory = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const language = location.state?.language || 'hi-IN';
+  const [selectedRegion, setSelectedRegion] = useState('all');
+  
+  const filteredNGOs = ngosData;
 
   const handleWhatsAppContact = (phone: string, ngoName: string) => {
     const message = encodeURIComponent(`नमस्ते, मुझे Legislate AI से आपकी जानकारी मिली है। मुझे कानूनी सहायता चाहिए। कृपया मदद करें।`);

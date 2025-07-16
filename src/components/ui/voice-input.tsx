@@ -87,8 +87,12 @@ export function VoiceInput({ onTranscript, language, className }: VoiceInputProp
       
       <p className="text-sm text-muted-foreground text-center max-w-xs">
         {isListening 
-          ? "सुन रहा हूँ... बोलिए" 
-          : "माइक दबाकर बोलें"
+          ? (language === 'en-IN' ? "Listening... Please speak" : 
+             language === 'te-IN' ? "వింటున్నాను... మాట్లాడండి" : 
+             language === 'mr-IN' ? "ऐकत आहे... बोला" : "सुन रहा हूँ... बोलिए")
+          : (language === 'en-IN' ? "Press mic to speak" : 
+             language === 'te-IN' ? "మైక్ నొక్కి మాట్లాడండి" : 
+             language === 'mr-IN' ? "मायक दाबून बोला" : "माइक दबाकर बोलें")
         }
       </p>
       

@@ -6,6 +6,7 @@ import { LanguageSelector } from '@/components/ui/language-selector';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FileText, Users, Phone, MessageSquare } from 'lucide-react';
+import { getTranslation } from '@/data/translations';
 import heroImage from '@/assets/hero-justice.jpg';
 
 const Home = () => {
@@ -28,26 +29,26 @@ const Home = () => {
   const features = [
     {
       icon: MessageSquare,
-      title: "आवाज़ से पूछें",
-      description: "अपनी भाषा में बोलकर कानूनी सलाह पाएं",
+      title: getTranslation('voiceQuery', selectedLanguage),
+      description: getTranslation('voiceDescription', selectedLanguage),
       color: "text-voice-active"
     },
     {
       icon: FileText,
-      title: "दस्तावेज़ बनाएं",
-      description: "FIR, RTI और अन्य कानूनी दस्तावेज़",
+      title: getTranslation('createDocs', selectedLanguage),
+      description: getTranslation('docsDescription', selectedLanguage),
       color: "text-justice-gold"
     },
     {
       icon: Users,
-      title: "NGO सपोर्ट",
-      description: "विशेषज्ञ कानूनी सहायता केंद्रों से जुड़ें",
+      title: getTranslation('ngoSupport', selectedLanguage),
+      description: getTranslation('ngoDescription', selectedLanguage),
       color: "text-justice-indigo"
     },
     {
       icon: Phone,
-      title: "WhatsApp शेयर",
-      description: "दस्तावेज़ और जानकारी साझा करें",
+      title: getTranslation('whatsappShare', selectedLanguage),
+      description: getTranslation('whatsappDescription', selectedLanguage),
       color: "text-voice-active"
     }
   ];
@@ -64,7 +65,7 @@ const Home = () => {
               onClick={() => navigate('/ngos')}
               className="text-sm"
             >
-              सहायता केंद्र
+              {getTranslation('helpCenter', selectedLanguage)}
             </Button>
           </div>
         </div>
@@ -83,13 +84,13 @@ const Home = () => {
             <div className="container mx-auto px-8">
               <div className="max-w-2xl text-white">
                 <h1 className="text-4xl md:text-6xl font-bold mb-4">
-                  Legislate AI
+                  {getTranslation('appName', selectedLanguage)}
                 </h1>
                 <p className="text-xl md:text-2xl mb-6 opacity-90">
-                  आपकी <span className="text-justice-gold-light font-semibold">आवाज़</span> है आपका अधिकार
+                  {getTranslation('tagline', selectedLanguage)}
                 </p>
                 <p className="text-lg opacity-80">
-                  कानूनी समस्याओं का समाधान • दस्तावेज़ निर्माण • विशेषज्ञ सहायता
+                  {getTranslation('subtitle', selectedLanguage)}
                 </p>
               </div>
             </div>
@@ -112,7 +113,7 @@ const Home = () => {
               language={selectedLanguage}
             />
             <p className="mt-4 text-sm text-muted-foreground">
-              "मेरी जमीन का विवाद है" या "घरेलू हिंसा की शिकायत कैसे करें"
+              {getTranslation('exampleQuery', selectedLanguage)}
             </p>
           </div>
         </div>
@@ -137,44 +138,44 @@ const Home = () => {
         {/* Quick Actions */}
         <div className="text-center space-y-4">
           <h3 className="text-xl font-semibold text-foreground mb-6">
-            त्वरित सहायता
+            {getTranslation('quickHelp', selectedLanguage)}
           </h3>
           <div className="flex flex-wrap justify-center gap-4">
             <Button 
               variant="outline" 
               onClick={() => navigate('/chat', { 
                 state: { 
-                  query: "FIR कैसे दर्ज करें", 
+                  query: selectedLanguage === 'en-IN' ? "How to file FIR" : selectedLanguage === 'te-IN' ? "FIR ఎలా దాఖలు చేయాలి" : selectedLanguage === 'mr-IN' ? "FIR कसे दाखल करावे" : "FIR कैसे दर्ज करें", 
                   language: selectedLanguage 
                 } 
               })}
               className="bg-document-bg hover:bg-muted"
             >
-              FIR दर्ज करना
+              {getTranslation('firHelp', selectedLanguage)}
             </Button>
             <Button 
               variant="outline"
               onClick={() => navigate('/chat', { 
                 state: { 
-                  query: "RTI कैसे भरें", 
+                  query: selectedLanguage === 'en-IN' ? "How to apply RTI" : selectedLanguage === 'te-IN' ? "RTI ఎలా దరఖాస్తు చేయాలి" : selectedLanguage === 'mr-IN' ? "RTI कसे अर्ज करावे" : "RTI कैसे भरें", 
                   language: selectedLanguage 
                 } 
               })}
               className="bg-document-bg hover:bg-muted"
             >
-              RTI आवेदन
+              {getTranslation('rtiHelp', selectedLanguage)}
             </Button>
             <Button 
               variant="outline"
               onClick={() => navigate('/chat', { 
                 state: { 
-                  query: "वृद्धावस्था पेंशन", 
+                  query: selectedLanguage === 'en-IN' ? "Old age pension scheme" : selectedLanguage === 'te-IN' ? "వృద్ధాప్య పెన్షన్ పథకం" : selectedLanguage === 'mr-IN' ? "वृद्धत्व पेन्शन योजना" : "वृद्धावस्था पेंशन", 
                   language: selectedLanguage 
                 } 
               })}
               className="bg-document-bg hover:bg-muted"
             >
-              पेंशन योजना
+              {getTranslation('pensionHelp', selectedLanguage)}
             </Button>
           </div>
         </div>
@@ -184,7 +185,7 @@ const Home = () => {
       <footer className="bg-primary text-primary-foreground py-6 mt-16">
         <div className="container mx-auto px-4 text-center">
           <p className="text-sm opacity-90">
-            यह एक AI सहायक है। कानूनी सलाह के लिए योग्य वकील से सलाह लें।
+            {getTranslation('disclaimer', selectedLanguage)}
           </p>
         </div>
       </footer>
