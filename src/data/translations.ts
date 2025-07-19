@@ -55,6 +55,11 @@ export const translations = {
     // Footer
     disclaimer: 'यह एक AI सहायक है। कानूनी सलाह के लिए योग्य वकील से सलाह लें।',
     
+    // Chatbot
+    chatPlaceholder: 'अपना कानूनी प्रश्न टाइप करें...',
+    chatWelcome: 'कानूनी सहायता के लिए अपना प्रश्न पूछें',
+    thinking: 'सोच रहा हूँ...',
+    
     // Common
     loading: 'लोड हो रहा है...',
     error: 'कुछ गलत हुआ है',
@@ -116,6 +121,11 @@ export const translations = {
     
     // Footer
     disclaimer: 'This is an AI assistant. Consult a qualified lawyer for legal advice.',
+    
+    // Chatbot
+    chatPlaceholder: 'Type your legal question...',
+    chatWelcome: 'Ask your legal question for assistance',
+    thinking: 'Thinking...',
     
     // Common
     loading: 'Loading...',
@@ -179,6 +189,11 @@ export const translations = {
     // Footer
     disclaimer: 'ఇది AI సహాయకుడు. న్యాయ సలహా కోసం అర్హత కలిగిన న్యాయవాదిని సంప్రదించండి.',
     
+    // Chatbot
+    chatPlaceholder: 'మీ న్యాయ ప్రశ్నను టైప్ చేయండి...',
+    chatWelcome: 'న్యాయ సహాయం కోసం మీ ప్రశ్న అడగండి',
+    thinking: 'ఆలోచిస్తున్నాను...',
+    
     // Common
     loading: 'లోడ్ అవుతోంది...',
     error: 'ఏదో తప్పు జరిగింది',
@@ -240,6 +255,11 @@ export const translations = {
     
     // Footer
     disclaimer: 'हा एक AI सहाय्यक आहे. कायदेशीर सल्ल्यासाठी पात्र वकिलाचा सल्ला घ्या.',
+    
+    // Chatbot
+    chatPlaceholder: 'तुमचा कायदेशीर प्रश्न टाइप करा...',
+    chatWelcome: 'कायदेशीर मदतीसाठी तुमचा प्रश्न विचारा',
+    thinking: 'विचार करत आहे...',
     
     // Common
     loading: 'लोड होत आहे...',

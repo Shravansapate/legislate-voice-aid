@@ -17,7 +17,7 @@ const Home = () => {
   const handleTranscript = (text: string) => {
     setTranscript(text);
     if (text.trim()) {
-      navigate('/chat', { 
+      navigate('/chat-ai', { 
         state: { 
           query: text.trim(), 
           language: selectedLanguage 
@@ -143,7 +143,7 @@ const Home = () => {
           <div className="flex flex-wrap justify-center gap-4">
             <Button 
               variant="outline" 
-              onClick={() => navigate('/chat', { 
+              onClick={() => navigate('/chat-ai', {
                 state: { 
                   query: selectedLanguage === 'en-IN' ? "How to file FIR" : selectedLanguage === 'te-IN' ? "FIR ఎలా దాఖలు చేయాలి" : selectedLanguage === 'mr-IN' ? "FIR कसे दाखल करावे" : "FIR कैसे दर्ज करें", 
                   language: selectedLanguage 
@@ -155,7 +155,7 @@ const Home = () => {
             </Button>
             <Button 
               variant="outline"
-              onClick={() => navigate('/chat', { 
+              onClick={() => navigate('/chat-ai', {
                 state: { 
                   query: selectedLanguage === 'en-IN' ? "How to apply RTI" : selectedLanguage === 'te-IN' ? "RTI ఎలా దరఖాస్తు చేయాలి" : selectedLanguage === 'mr-IN' ? "RTI कसे अर्ज करावे" : "RTI कैसे भरें", 
                   language: selectedLanguage 
@@ -167,7 +167,7 @@ const Home = () => {
             </Button>
             <Button 
               variant="outline"
-              onClick={() => navigate('/chat', { 
+              onClick={() => navigate('/chat-ai', { 
                 state: { 
                   query: selectedLanguage === 'en-IN' ? "Old age pension scheme" : selectedLanguage === 'te-IN' ? "వృద్ధాప్య పెన్షన్ పథకం" : selectedLanguage === 'mr-IN' ? "वृद्धत्व पेन्शन योजना" : "वृद्धावस्था पेंशन", 
                   language: selectedLanguage 
