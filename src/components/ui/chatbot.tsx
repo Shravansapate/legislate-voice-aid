@@ -214,14 +214,20 @@ export function Chatbot({ language, className }: ChatbotProps) {
 
         {/* Input Area */}
         <div className="border-t p-4 space-y-4">
-          {/* Voice Input */}
-          <div className="flex justify-center">
-            <VoiceInput
-              onTranscript={(transcript) => sendMessage(transcript)}
-              language={language}
-              className="scale-75"
-            />
-          </div>
+          {/* Start Question Button */}
+          {messages.length === 0 && (
+            <div className="flex justify-center">
+              <Button
+                onClick={() => inputRef.current?.focus()}
+                className="bg-justice-indigo hover:bg-justice-indigo/90 text-white px-6 py-3 rounded-full"
+              >
+                {language === 'hi-IN' && 'सवाल पूछना शुरू करें'}
+                {language === 'en-IN' && 'Start Asking Question'}
+                {language === 'te-IN' && 'ప్రశ్న అడగడం మొదలుపెట్టండి'}
+                {language === 'mr-IN' && 'प्रश्न विचारणे सुरू करा'}
+              </Button>
+            </div>
+          )}
           
           {/* Text Input */}
           <div className="flex gap-2">
