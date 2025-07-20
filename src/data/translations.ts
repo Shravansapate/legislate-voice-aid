@@ -60,16 +60,6 @@ export const translations = {
     chatWelcome: 'कानूनी सहायता के लिए अपना प्रश्न पूछें',
     thinking: 'सोच रहा हूँ...',
     
-    // Legislate UI translations
-    createAgreements: 'समझौते बनाएं',
-    generateContracts: 'अपनी आवश्यकताओं के अनुरूप कॉन्ट्रैक्ट जेनरेट करें',
-    newAgreement: 'नया समझौता',
-    myDocuments: 'मेरे दस्तावेज़',
-    recentAgreements: 'हाल के समझौते',
-    employmentContract: 'रोजगार अनुबंध',
-    tenancyAgreement: 'किराया समझौता',
-    nonDisclosure: 'गैर-प्रकटीकरण समझौता',
-    
     // Common
     loading: 'लोड हो रहा है...',
     error: 'कुछ गलत हुआ है',
@@ -136,16 +126,6 @@ export const translations = {
     chatPlaceholder: 'Type your legal question...',
     chatWelcome: 'Ask your legal question for assistance',
     thinking: 'Thinking...',
-    
-    // Legislate UI translations
-    createAgreements: 'Create agreements',
-    generateContracts: 'Generate contracts tailored to your needs',
-    newAgreement: 'New agreement',
-    myDocuments: 'My documents',
-    recentAgreements: 'Recent agreements',
-    employmentContract: 'Employment contract',
-    tenancyAgreement: 'Tenancy agreement',
-    nonDisclosure: 'Non-disclosure agreement',
     
     // Common
     loading: 'Loading...',
@@ -214,16 +194,6 @@ export const translations = {
     chatWelcome: 'న్యాయ సహాయం కోసం మీ ప్రశ్న అడగండి',
     thinking: 'ఆలోచిస్తున్నాను...',
     
-    // Legislate UI translations
-    createAgreements: 'ఒప్పందాలు సృష్టించండి',
-    generateContracts: 'మీ అవసరాలకు అనుగుణంగా ఒప్పందాలను రూపొందించండి',
-    newAgreement: 'కొత్త ఒప్పందం',
-    myDocuments: 'నా పత్రాలు',
-    recentAgreements: 'ఇటీవలి ఒప్పందాలు',
-    employmentContract: 'ఉద్యోగ ఒప్పందం',
-    tenancyAgreement: 'అద్దె ఒప్పందం',
-    nonDisclosure: 'నాన్-డిస్క్లోజర్ ఒప్పందం',
-    
     // Common
     loading: 'లోడ్ అవుతోంది...',
     error: 'ఏదో తప్పు జరిగింది',
@@ -290,16 +260,6 @@ export const translations = {
     chatPlaceholder: 'तुमचा कायदेशीर प्रश्न टाइप करा...',
     chatWelcome: 'कायदेशीर मदतीसाठी तुमचा प्रश्न विचारा',
     thinking: 'विचार करत आहे...',
-    
-    // Legislate UI translations
-    createAgreements: 'करार तयार करा',
-    generateContracts: 'आपल्या गरजेनुसार करार तयार करा',
-    newAgreement: 'नवीन करार',
-    myDocuments: 'माझी कागदपत्रे',
-    recentAgreements: 'अलीकडील करार',
-    employmentContract: 'रोजगार करार',
-    tenancyAgreement: 'भाडे करार',
-    nonDisclosure: 'गैर-प्रकटीकरण करार',
     
     // Common
     loading: 'लोड होत आहे...',
