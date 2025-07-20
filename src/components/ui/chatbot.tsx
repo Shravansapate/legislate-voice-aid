@@ -3,9 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
-import { Bot, User, Send, Loader2, Volume2, VolumeX, Settings } from 'lucide-react';
+import { VoiceInput } from '@/components/ui/voice-input';
+import { Bot, User, Send, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import axios from 'axios';
 
@@ -25,11 +24,7 @@ export function Chatbot({ language, className }: ChatbotProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [apiKey, setApiKey] = useState('');
-  const [isTTSEnabled, setIsTTSEnabled] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = () => {
@@ -44,72 +39,6 @@ export function Chatbot({ language, className }: ChatbotProps) {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  useEffect(() => {
-    // Load API key from localStorage
-    const savedApiKey = localStorage.getItem('elevenlabs_api_key');
-    if (savedApiKey) {
-      setApiKey(savedApiKey);
-      setIsTTSEnabled(true);
-    }
-  }, []);
-
-  const saveApiKey = (key: string) => {
-    localStorage.setItem('elevenlabs_api_key', key);
-    setApiKey(key);
-    setIsTTSEnabled(true);
-  };
-
-  const speakText = async (text: string) => {
-    if (!apiKey || !isTTSEnabled) return;
-
-    try {
-      setIsPlaying(true);
-      const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/9BWtsMINqrJLrRacOk9x', {
-        method: 'POST',
-        headers: {
-          'Accept': 'audio/mpeg',
-          'Content-Type': 'application/json',
-          'xi-api-key': apiKey,
-        },
-        body: JSON.stringify({
-          text: text,
-          model_id: 'eleven_multilingual_v2',
-          voice_settings: {
-            stability: 0.5,
-            similarity_boost: 0.5,
-          },
-        }),
-      });
-
-      if (response.ok) {
-        const audioBlob = await response.blob();
-        const audioUrl = URL.createObjectURL(audioBlob);
-        
-        if (audioRef.current) {
-          audioRef.current.pause();
-        }
-        
-        audioRef.current = new Audio(audioUrl);
-        audioRef.current.onended = () => {
-          setIsPlaying(false);
-          URL.revokeObjectURL(audioUrl);
-        };
-        audioRef.current.play();
-      }
-    } catch (error) {
-      console.error('TTS Error:', error);
-      setIsPlaying(false);
-    }
-  };
-
-  const stopSpeech = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-      setIsPlaying(false);
-    }
-  };
 
   const sendMessage = async (messageText?: string) => {
     const textToSend = messageText || input.trim();
@@ -158,11 +87,6 @@ export function Chatbot({ language, className }: ChatbotProps) {
       };
 
       setMessages(prev => [...prev, aiMessage]);
-      
-      // Speak the response if TTS is enabled
-      if (isTTSEnabled && apiKey) {
-        setTimeout(() => speakText(response.data.choices[0].message.content), 500);
-      }
     } catch (error) {
       console.error('Error sending message:', error);
       const errorMessage: Message = {
@@ -217,60 +141,8 @@ export function Chatbot({ language, className }: ChatbotProps) {
   return (
     <Card className={cn("w-full max-w-4xl mx-auto", className)}>
       <CardContent className="p-0">
-        {/* Header with TTS Controls */}
-        <div className="flex items-center justify-between p-4 border-b">
-          <div className="flex items-center gap-2">
-            <Bot className="h-5 w-5 text-justice-indigo" />
-            <span className="font-semibold text-foreground">AI Legal Assistant</span>
-          </div>
-          <div className="flex items-center gap-2">
-            {isTTSEnabled && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={isPlaying ? stopSpeech : undefined}
-                className="h-8 w-8 p-0"
-              >
-                {isPlaying ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
-              </Button>
-            )}
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                  <Settings className="h-4 w-4" />
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                  <DialogTitle>Text-to-Speech Settings</DialogTitle>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="api-key" className="text-right">
-                      ElevenLabs API Key
-                    </Label>
-                    <Input
-                      id="api-key"
-                      type="password"
-                      placeholder="sk-or-v1-..."
-                      value={apiKey}
-                      onChange={(e) => setApiKey(e.target.value)}
-                      className="col-span-3"
-                    />
-                  </div>
-                  <div className="flex justify-end">
-                    <Button onClick={() => saveApiKey(apiKey)} disabled={!apiKey}>
-                      Save & Enable TTS
-                    </Button>
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
-          </div>
-        </div>
-        
         {/* Chat Messages */}
-        <ScrollArea ref={scrollAreaRef} className="h-[450px] p-4">
+        <ScrollArea ref={scrollAreaRef} className="h-[500px] p-4">
           {messages.length === 0 ? (
             <div className="flex items-center justify-center h-full text-muted-foreground">
               <div className="text-center">
