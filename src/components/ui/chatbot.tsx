@@ -72,7 +72,7 @@ export function Chatbot({ language, className }: ChatbotProps) {
         max_tokens: 1000
       }, {
         headers: {
-          'Authorization': 'Bearer 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',
+          'Authorization': 'Bearer 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',
           'Content-Type': 'application/json',
           'HTTP-Referer': window.location.origin,
           'X-Title': 'Legislate AI'
