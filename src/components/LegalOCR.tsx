@@ -19,7 +19,7 @@ interface AIExplanation {
   urgentDeadlines: string[];
 }
 
-const OPENAI_API_KEY = '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';
+const OPENAI_API_KEY = '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';
 
 export function LegalOCR() {
   const [isProcessing, setIsProcessing] = useState(false);
