@@ -13,12 +13,22 @@ interface OCRResult {
   confidence: number;
 }
 
+interface AIExplanation {
+  simplifiedText: string;
+  keyPoints: string[];
+  urgentDeadlines: string[];
+}
+
+const OPENAI_API_KEY = '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';
+
 export function LegalOCR() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [ocrResult, setOcrResult] = useState<OCRResult | null>(null);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [aiExplanation, setAiExplanation] = useState<AIExplanation | null>(null);
+  const [isExplaining, setIsExplaining] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,6 +49,7 @@ export function LegalOCR() {
 
     setError(null);
     setOcrResult(null);
+    setAiExplanation(null);
     setIsProcessing(true);
     setProgress(0);
 
@@ -98,12 +109,53 @@ export function LegalOCR() {
     fileInputRef.current?.click();
   };
 
-  const explainWithAI = () => {
-    toast({
-      title: "AI Explanation requires backend",
-      description: "Connect to Supabase to enable OpenAI API integration for explaining legal text in simple language.",
-      variant: "default"
-    });
+  const explainWithAI = async () => {
+    if (!ocrResult?.text) return;
+    
+    setIsExplaining(true);
+    setError(null);
+    
+    try {
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${OPENAI_API_KEY}`
+        },
+        body: JSON.stringify({
+          model: 'gpt-4.1-2025-04-14',
+          messages: [
+            {
+              role: 'system',
+              content: 'You are a legal assistant helping underrepresented people understand legal documents. Explain legal text in simple, clear language that anyone can understand. Focus on key points, deadlines, and what actions the person needs to take. Format your response as JSON with: simplifiedText (main explanation), keyPoints (array of important points), urgentDeadlines (array of any time-sensitive items).'
+            },
+            {
+              role: 'user',
+              content: `Please explain this legal text in simple language: "${ocrResult.text}"`
+            }
+          ],
+          temperature: 0.3
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const explanation = JSON.parse(data.choices[0].message.content);
+      
+      setAiExplanation(explanation);
+      toast({
+        title: "AI explanation generated!",
+        description: "Legal text explained in simple language"
+      });
+    } catch (err) {
+      console.error('AI Explanation Error:', err);
+      setError('Failed to generate AI explanation. Please try again.');
+    } finally {
+      setIsExplaining(false);
+    }
   };
 
   return (
@@ -221,14 +273,68 @@ export function LegalOCR() {
                     {ocrResult.text}
                   </pre>
                 </div>
-                <Button onClick={explainWithAI} className="w-full">
-                  <FileText className="h-4 w-4 mr-2" />
-                  Explain in Simple Language (AI)
+                <Button onClick={explainWithAI} className="w-full" disabled={isExplaining}>
+                  {isExplaining ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  ) : (
+                    <FileText className="h-4 w-4 mr-2" />
+                  )}
+                  {isExplaining ? 'Generating AI Explanation...' : 'Explain in Simple Language (AI)'}
                 </Button>
               </CardContent>
             </Card>
           )}
         </div>
+      )}
+
+      {/* AI Explanation */}
+      {aiExplanation && (
+        <Card className="border-primary/30 bg-primary/5">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <FileText className="h-5 w-5" />
+              AI Explanation in Simple Language
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-3">
+              <div>
+                <h4 className="font-medium text-foreground mb-2">What this document means:</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {aiExplanation.simplifiedText}
+                </p>
+              </div>
+              
+              {aiExplanation.keyPoints.length > 0 && (
+                <div>
+                  <h4 className="font-medium text-foreground mb-2">Key Points:</h4>
+                  <ul className="space-y-1">
+                    {aiExplanation.keyPoints.map((point, index) => (
+                      <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                        <span className="text-primary mt-1">•</span>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              
+              {aiExplanation.urgentDeadlines.length > 0 && (
+                <div>
+                  <h4 className="font-medium text-destructive mb-2">⚠️ Urgent Deadlines:</h4>
+                  <ul className="space-y-1">
+                    {aiExplanation.urgentDeadlines.map((deadline, index) => (
+                      <li key={index} className="text-sm text-destructive flex items-start gap-2">
+                        <span className="text-destructive mt-1">🕒</span>
+                        <span>{deadline}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
       )}
 
       {/* Info Card */}
