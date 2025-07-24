@@ -5,7 +5,7 @@ import { VoiceInput } from '@/components/ui/voice-input';
 import { LanguageSelector } from '@/components/ui/language-selector';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, Users, Phone, MessageSquare, Camera } from 'lucide-react';
+import { FileText, Users, Phone, MessageSquare } from 'lucide-react';
 import { getTranslation } from '@/data/translations';
 import heroImage from '@/assets/hero-justice.jpg';
 
@@ -167,7 +167,7 @@ const Home = () => {
             </Button>
             <Button 
               variant="outline"
-              onClick={() => navigate('/chat-ai', {
+              onClick={() => navigate('/chat-ai', { 
                 state: { 
                   query: selectedLanguage === 'en-IN' ? "Old age pension scheme" : selectedLanguage === 'te-IN' ? "వృద్ధాప్య పెన్షన్ పథకం" : selectedLanguage === 'mr-IN' ? "वृद्धत्व पेन्शन योजना" : "वृद्धावस्था पेंशन", 
                   language: selectedLanguage 
@@ -176,17 +176,6 @@ const Home = () => {
               className="bg-document-bg hover:bg-muted"
             >
               {getTranslation('pensionHelp', selectedLanguage)}
-            </Button>
-            <Button 
-              variant="outline"
-              onClick={() => navigate('/ocr')}
-              className="bg-primary/10 hover:bg-primary/20 text-primary border-primary/30 flex items-center gap-2"
-            >
-              <Camera className="h-4 w-4" />
-              {selectedLanguage === 'en-IN' ? 'Scan Legal Document' : 
-               selectedLanguage === 'te-IN' ? 'లీగల్ డాక్యుమెంట్ స్కాన్' :
-               selectedLanguage === 'mr-IN' ? 'कानूनी दस्तऐवज स्कॅन करा' : 
-               'कानूनी दस्तावेज स्कैन करें'}
             </Button>
           </div>
         </div>

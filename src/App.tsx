@@ -8,7 +8,6 @@ import Chat from "./pages/Chat";
 import ChatAI from "./pages/ChatAI";
 import Document from "./pages/Document";
 import NGODirectory from "./pages/NGODirectory";
-import OCRPage from "./pages/OCRPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,7 +24,6 @@ const App = () => (
           <Route path="/chat-ai" element={<ChatAI />} />
           <Route path="/document" element={<Document />} />
           <Route path="/ngos" element={<NGODirectory />} />
-          <Route path="/ocr" element={<OCRPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
