@@ -13,10 +13,14 @@ const ChatAI = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [language, setLanguage] = useState('hi-IN');
+  const [initialMessage, setInitialMessage] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     if (location.state?.language) {
       setLanguage(location.state.language);
+    }
+    if (location.state?.initialMessage) {
+      setInitialMessage(location.state.initialMessage);
     }
   }, [location.state]);
 
@@ -92,7 +96,7 @@ const ChatAI = () => {
 
         {/* Main Chatbot */}
         <div className="mb-8">
-          <Chatbot language={language} />
+          <Chatbot language={language} initialMessage={initialMessage} />
         </div>
 
         {/* Quick Action Buttons */}

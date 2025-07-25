@@ -18,12 +18,14 @@ interface Message {
 interface ChatbotProps {
   language: string;
   className?: string;
+  initialMessage?: string;
 }
 
-export function Chatbot({ language, className }: ChatbotProps) {
+export function Chatbot({ language, className, initialMessage }: ChatbotProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [hasProcessedInitialMessage, setHasProcessedInitialMessage] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -39,6 +41,14 @@ export function Chatbot({ language, className }: ChatbotProps) {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Handle initial message from OCR
+  useEffect(() => {
+    if (initialMessage && !hasProcessedInitialMessage) {
+      setHasProcessedInitialMessage(true);
+      sendMessage(initialMessage);
+    }
+  }, [initialMessage, hasProcessedInitialMessage]);
 
   const sendMessage = async (messageText?: string) => {
     const textToSend = messageText || input.trim();

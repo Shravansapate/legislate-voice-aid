@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import { Upload, FileText, Loader2, Camera, AlertCircle } from 'lucide-react';
+import { Upload, FileText, Loader2, Camera, AlertCircle, MessageSquare } from 'lucide-react';
 import { createWorker } from 'tesseract.js';
 import { toast } from '@/hooks/use-toast';
 
@@ -22,6 +23,7 @@ interface AIExplanation {
 const OPENROUTER_API_KEY = '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';
 
 export function LegalOCR() {
+  const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [ocrResult, setOcrResult] = useState<OCRResult | null>(null);
@@ -160,6 +162,23 @@ export function LegalOCR() {
     }
   };
 
+  const sendToChatbot = () => {
+    if (!ocrResult?.text) return;
+    
+    // Navigate to chatbot with the extracted text as initial message
+    navigate('/chat', { 
+      state: { 
+        initialMessage: `Please help me understand this legal document I scanned:\n\n"${ocrResult.text}"`,
+        language: 'en-IN'
+      } 
+    });
+    
+    toast({
+      title: "Sent to Chatbot!",
+      description: "Your extracted text has been sent to the AI assistant for further help."
+    });
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       <div className="text-center space-y-2">
@@ -275,14 +294,20 @@ export function LegalOCR() {
                     {ocrResult.text}
                   </pre>
                 </div>
-                <Button onClick={explainWithAI} className="w-full" disabled={isExplaining}>
-                  {isExplaining ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  ) : (
-                    <FileText className="h-4 w-4 mr-2" />
-                  )}
-                  {isExplaining ? 'Generating AI Explanation...' : 'Explain in Simple Language (AI)'}
-                </Button>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <Button onClick={explainWithAI} disabled={isExplaining}>
+                    {isExplaining ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <FileText className="h-4 w-4 mr-2" />
+                    )}
+                    {isExplaining ? 'Generating...' : 'Explain (AI)'}
+                  </Button>
+                  <Button onClick={sendToChatbot} variant="outline">
+                    <MessageSquare className="h-4 w-4 mr-2" />
+                    Send to Chatbot
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           )}
