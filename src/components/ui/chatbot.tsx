@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { VoiceInput } from '@/components/ui/voice-input';
 import { Bot, User, Send, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import axios from 'axios';
@@ -39,18 +40,19 @@ export function Chatbot({ language, className }: ChatbotProps) {
     scrollToBottom();
   }, [messages]);
 
-  const sendMessage = async () => {
-    if (!input.trim() || isLoading) return;
+  const sendMessage = async (messageText?: string) => {
+    const textToSend = messageText || input.trim();
+    if (!textToSend || isLoading) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
-      content: input.trim(),
+      content: textToSend,
       timestamp: new Date()
     };
 
     setMessages(prev => [...prev, userMessage]);
-    setInput('');
+    if (!messageText) setInput('');
     setIsLoading(true);
 
     try {
@@ -211,7 +213,17 @@ export function Chatbot({ language, className }: ChatbotProps) {
         </ScrollArea>
 
         {/* Input Area */}
-        <div className="border-t p-4">
+        <div className="border-t p-4 space-y-4">
+          {/* Voice Input */}
+          <div className="flex justify-center">
+            <VoiceInput
+              onTranscript={(transcript) => sendMessage(transcript)}
+              language={language}
+              className="scale-75"
+            />
+          </div>
+          
+          {/* Text Input */}
           <div className="flex gap-2">
             <Input
               ref={inputRef}
@@ -223,7 +235,7 @@ export function Chatbot({ language, className }: ChatbotProps) {
               className="flex-1 bg-background"
             />
             <Button 
-              onClick={sendMessage}
+              onClick={() => sendMessage()}
               disabled={!input.trim() || isLoading}
               className="bg-justice-indigo hover:bg-justice-indigo/90 text-white px-4"
             >
