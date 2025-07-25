@@ -19,7 +19,7 @@ interface AIExplanation {
   urgentDeadlines: string[];
 }
 
-const OPENAI_API_KEY = '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';
+const OPENROUTER_API_KEY = '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';
 
 export function LegalOCR() {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -116,14 +116,16 @@ export function LegalOCR() {
     setError(null);
     
     try {
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${OPENAI_API_KEY}`
+          'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+          'HTTP-Referer': window.location.origin,
+          'X-Title': 'Legal OCR Assistant'
         },
         body: JSON.stringify({
-          model: 'gpt-4.1-2025-04-14',
+          model: 'openai/gpt-4o-mini',
           messages: [
             {
               role: 'system',
